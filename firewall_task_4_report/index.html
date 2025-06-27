@@ -2,28 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Firewall Configuration Report - Task 4</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f8f9fa;
-      margin: 4px;
+      margin: 40px;
       color: #333;
     }
     h1, h2 {
-      color: #2c3e5;
+      color: #2c3e50;
     }
     .section {
-      margin-bottom: 3px;
+      margin-bottom: 30px;
     }
     img {
-      max-width: 1%;
+      max-width: 100%;
       height: auto;
       border: 1px solid #ccc;
       padding: 4px;
       background: #fff;
-      margin-top: 1px;
+      margin-top: 10px;
       display: block; /* Ensures images are on their own line */
       margin-bottom: 15px; /* Adds space below images */
     }
@@ -31,12 +31,12 @@
       background-color: #f1f1f1;
       padding: 2px 6px;
       border-radius: 4px;
-      font-size: .95em;
+      font-size: 0.95em;
     }
     .command {
       background-color: #272822;
       color: #f8f8f2;
-      padding: 1px;
+      padding: 10px;
       border-radius: 6px;
       font-family: monospace;
       overflow-x: auto;
@@ -61,14 +61,14 @@
 
   <div class="section">
     <h2>2. Firewall Rule Creation</h2>
-    <p>I created a new inbound firewall rule named <strong>“Firewall Task”</strong> using the Windows Defender Firewall GUI. The rule was configured to block <strong>TCP traffic on port 123</strong> for all network profiles (Domain, Private, and Public).</p>
+    <p>I created a new inbound firewall rule named <strong>“Firewall Task”</strong> using the Windows Defender Firewall GUI. The rule was configured to block <strong>TCP traffic on port 1023</strong> for all network profiles (Domain, Private, and Public).</p>
 
     <h3>New Inbound Rule Wizard Steps:</h3>
     <p><strong>Step 1: Rule Type</strong> - Selected 'Port' to control connections for a specific TCP or UDP port.</p>
     <img src="3.png" alt="New Inbound Rule Wizard - Rule Type" title="Rule Type: Port">
 
-    <p><strong>Step 2: Protocol and Ports</strong> - Configured the rule to apply to TCP traffic on specific local port 123.</p>
-    <img src="4.png" alt="New Inbound Rule Wizard - Protocol and Ports" title="Protocol and Ports: TCP, Port 123">
+    <p><strong>Step 2: Protocol and Ports</strong> - Configured the rule to apply to TCP traffic on specific local port 1023.</p>
+    <img src="4.png" alt="New Inbound Rule Wizard - Protocol and Ports" title="Protocol and Ports: TCP, Port 1023">
 
     <p><strong>Step 3: Action</strong> - Chosen action was to 'Block the connection' for any traffic matching the rule.</p>
     <img src="5.png" alt="New Inbound Rule Wizard - Action" title="Action: Block the connection">
@@ -85,13 +85,13 @@
 
   <div class="section">
     <h2>3. Testing the Rule</h2>
-    <p>I used PowerShell's <code>Test-NetConnection</code> cmdlet to verify if port 123 was successfully blocked by the new rule.</p>
+    <p>I used PowerShell's <code>Test-NetConnection</code> cmdlet to verify if port 1023 was successfully blocked by the new rule.</p>
     <div class="command">
-      Test-NetConnection -ComputerName localhost -Port 123
+      Test-NetConnection -ComputerName localhost -Port 1023
     </div>
     <img src="9.png" alt="PowerShell command to test network connection" title="PowerShell Test Command">
-    <p><strong>Result:</strong> The connection attempt failed, indicated by <code>TcpTestSucceeded : False</code>, confirming that the firewall rule was working correctly and blocking traffic on port 123.</p>
-    <img src="1.png" alt="PowerShell Test Result showing connection failed" title="PowerShell Test Result: Failed">
+    <p><strong>Result:</strong> The connection attempt failed, indicated by <code>TcpTestSucceeded : False</code>, confirming that the firewall rule was working correctly and blocking traffic on port 1023.</p>
+    <img src="10.png" alt="PowerShell Test Result showing connection failed" title="PowerShell Test Result: Failed">
   </div>
 
   <div class="section">
@@ -108,7 +108,7 @@
   <div class="section">
     <h2>5. Summary</h2>
     <ul>
-      <li>Successfully configured a Windows Firewall rule to block TCP traffic on port 123.</li>
+      <li>Successfully configured a Windows Firewall rule to block TCP traffic on port 1023.</li>
       <li>Verified the block using PowerShell's <code>Test-NetConnection</code> cmdlet.</li>
       <li>Removed the rule to return the system to its default behavior.</li>
     </ul>
