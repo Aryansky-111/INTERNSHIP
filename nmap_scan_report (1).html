@@ -1,0 +1,80 @@
+<p><strong>Cyber Security Internship – Task 1 Report</strong></p>
+<p><strong>Candidate Name:</strong> Bhojani Aryan Sirajbhai</p>
+<p><strong>Date of Scan:</strong> 23 June 2025</p>
+<hr />
+<h2 id="1-objective">1. Objective</h2>
+<p>Perform a TCP SYN port scan (Nmap) against the local network
+(192.168.1.0/24), identify hosts and open ports, and document findings
+according to the internship brief.</p>
+<h2 id="2-tools-and-environment">2. Tools and Environment</h2>
+<ul>
+<li><strong>Tool:</strong> Nmap v7.95</li>
+<li><strong>Environment:</strong> Kali Linux (or equivalent), connected
+to the local network 192.168.1.0/24</li>
+<li><strong>Output Saved:</strong> <code>nmap-test.txt</code></li>
+</ul>
+<h2 id="3-scan-command">3. Scan Command</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">-sS</span> <span class="at">-Pn</span> <span class="at">-vv</span> <span class="at">-oN</span> nmap-test.txt 192.168.1.0/24</span></code></pre></div>
+<ul>
+<li><strong>-sS:</strong> TCP SYN (stealth) scan</li>
+<li><strong>-Pn:</strong> Treat all hosts as online (skip host discovery
+ping)</li>
+<li><strong>-vv:</strong> Very verbose output</li>
+<li><strong>-oN:</strong> Normal output to file</li>
+</ul>
+<h2 id="4-scan-results">4. Scan Results</h2>
+<p>Below is an excerpt of the scan output for the two live hosts
+detected:</p>
+<pre><code>Starting Nmap 7.95 ( https://nmap.org ) at 2025-06-23 20:30 IST
+
+Nmap scan report for 192.168.1.1 (192.168.1.1)
+Host is up (0.0037s latency).
+Not shown: 997 closed tcp ports (reset)
+PORT     STATE SERVICE
+23/tcp   open  telnet
+80/tcp   open  http
+3517/tcp open  802-11-iapp
+
+Nmap scan report for oneplus_nord_n30_5g (192.168.1.4)
+Host is up (0.013s latency).
+All 1000 scanned ports on nizban-s-a26 (192.168.1.4) are in ignored states.
+Not shown: 1000 closed tcp ports (reset)
+
+Nmap done: 256 IP addresses (2 hosts up) scanned in 5.55 seconds</code></pre>
+<h2 id="5-analysis">5. Analysis</h2>
+<ol type="1">
+<li><p><strong>Host 192.168.1.1:</strong></p>
+<ul>
+<li>Open ports:
+<ul>
+<li><strong>23/tcp (telnet):</strong> Unencrypted remote login
+service—highly insecure; should be disabled or replaced by SSH (port
+22).</li>
+<li><strong>80/tcp (http):</strong> Standard web service—investigate web
+application for vulnerabilities.</li>
+<li><strong>3517/tcp (802-11-iapp):</strong> Wi‑Fi Inter‑Access Point
+Protocol—likely related to wireless AP management; review for unintended
+exposure.</li>
+</ul></li>
+<li><strong>Recommendation:</strong> Disable Telnet, restrict HTTP
+access via firewall, and verify wireless management protocols are
+secured.</li>
+</ul></li>
+<li><p><strong>Host nizban-s-a26 (192.168.1.4):</strong></p>
+<ul>
+<li>No open ports detected—appears hardened or host may be down for
+services.</li>
+<li><strong>Recommendation:</strong> Confirm intended service
+configuration; validate host purpose and firewall rules.</li>
+</ul></li>
+</ol>
+<h2 id="6-conclusion">6. Conclusion</h2>
+<p>The SYN scan identified two active hosts. One host (192.168.1.1)
+exposes insecure services (Telnet) and a wireless management port that
+require immediate attention. The second host appears closed to external
+scans. Further steps may include vulnerability scanning (e.g.,
+<code>-sV</code> for version detection), service enumeration, and deeper
+analysis with Wireshark if necessary.</p>
+<hr />
+<p><em>End of Task 1 Report</em></p>

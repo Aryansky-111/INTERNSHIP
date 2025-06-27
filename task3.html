@@ -1,0 +1,153 @@
+<h1>Cybersecurity Internship Task 3: Vulnerability Assessment Report</h1>
+
+<h2>Introduction</h2>
+
+<p>This report details a vulnerability assessment performed as part of a cybersecurity internship task. The objective was to identify common vulnerabilities on a system using free tools and to understand the process of vulnerability scanning, risk assessment, and reporting. A scan was conducted using Nmap on the local Linux environment, supplemented by research into common vulnerabilities and the Common Vulnerability Scoring System (CVSS).</p>
+
+<h2>Vulnerability Scan (Nmap)</h2>
+
+<p>A basic vulnerability scan was performed using Nmap (Network Mapper), a free and open-source utility for network discovery and security auditing. While it is not a full-fledged vulnerability scanner like OpenVAS or Nessus, it can identify open ports and services, which are often indicators of potential vulnerabilities.</p>
+
+<h3>Scan Details</h3>
+
+<ul>
+<li><strong>Tool Used:</strong> Nmap  </li>
+<li><strong>Target:</strong> Localhost (127.0.0.1)  </li>
+<li><strong>Command:</strong> <code>nmap 127.0.0.1</code></li>
+</ul>
+
+<h3>Scan Results</h3>
+
+<p><code>
+Starting Nmap 7.80 ( https://nmap.org ) at 2025-06-26 09:57 EDT
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.000070s latency).
+Not shown: 997 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+5900/tcp open  vnc
+5901/tcp open  vnc-1
+Nmap done: 1 IP address (1 host up) scanned in 0.04 seconds
+</code></p>
+
+<h3>Analysis of Scan Results</h3>
+
+<p>The scan identified three open ports:</p>
+
+<ul>
+<li><strong>22/tcp (SSH):</strong> Secure Shell (SSH) is a cryptographic network protocol for operating network services securely over an unsecured network. Misconfigurations or weak credentials can lead to vulnerabilities.</li>
+<li><strong>5900/tcp (VNC):</strong> Virtual Network Computing (VNC) is a graphical desktop sharing system. If VNC is exposed to the internet without proper authentication or encryption, it can pose a security risk.</li>
+<li><strong>5901/tcp (VNC-1):</strong> Likely another VNC instance. Same security considerations apply.</li>
+</ul>
+
+<p>These open ports indicate services running on the system that could be exploited if not properly secured. Further investigation would be required to determine the specific versions of these services and if any known vulnerabilities exist. Strong authentication and network segmentation are crucial.</p>
+
+<h2>Common Computer Vulnerabilities</h2>
+
+<h3>1. Software Vulnerabilities</h3>
+
+<ul>
+<li><strong>Outdated or Unpatched Software:</strong> Targeted using publicly available exploits.</li>
+<li><strong>Buffer Overflows:</strong> Overwriting adjacent memory, leading to crashes or arbitrary code execution.</li>
+<li><strong>SQL Injection:</strong> Allows viewing or modifying unauthorized data in databases.</li>
+<li><strong>Cross-Site Scripting (XSS):</strong> Injection of malicious scripts into trusted websites.</li>
+</ul>
+
+<h3>2. Network Vulnerabilities</h3>
+
+<ul>
+<li><strong>Misconfigured Firewalls/Routers:</strong> Leave ports open or expose internal services.</li>
+<li><strong>Weak Encryption:</strong> Outdated encryption makes data interception easier.</li>
+<li><strong>Open Ports and Services:</strong> Unsecured services are entry points.</li>
+</ul>
+
+<h3>3. Human/Process Vulnerabilities</h3>
+
+<ul>
+<li><strong>Phishing:</strong> Tricking users into revealing sensitive data.</li>
+<li><strong>Weak Passwords:</strong> Easy to guess or crack.</li>
+<li><strong>Lack of Security Awareness:</strong> Users unintentionally creating risks.</li>
+</ul>
+
+<h3>4. Malware</h3>
+
+<ul>
+<li><strong>Viruses:</strong> Attach to programs and spread on execution.</li>
+<li><strong>Worms:</strong> Spread across networks without interaction.</li>
+<li><strong>Ransomware:</strong> Encrypts files and demands payment.</li>
+<li><strong>Trojans:</strong> Disguised as legitimate software.</li>
+</ul>
+
+<h2>Common Vulnerability Scoring System (CVSS)</h2>
+
+<p>CVSS is a standard for assessing vulnerability severity. It provides numerical scores (0.0 to 10.0) and qualitative categories.</p>
+
+<h3>CVSS Metrics</h3>
+
+<ol>
+<li><strong>Base Metrics:</strong> Characteristics of the vulnerability (e.g., Attack Vector, Privileges Required).  </li>
+<li><strong>Temporal Metrics:</strong> Change over time (e.g., Exploit Code Maturity, Report Confidence).  </li>
+<li><strong>Environmental Metrics:</strong> Tailored to specific user environments.</li>
+</ol>
+
+<h3>CVSS Scoring</h3>
+
+<ul>
+<li><strong>None:</strong> 0.0  </li>
+<li><strong>Low:</strong> 0.1 - 3.9  </li>
+<li><strong>Medium:</strong> 4.0 - 6.9  </li>
+<li><strong>High:</strong> 7.0 - 8.9  </li>
+<li><strong>Critical:</strong> 9.0 - 10.0</li>
+</ul>
+
+<h2>Interview Questions and Answers</h2>
+
+<h3>1. What is vulnerability scanning?</h3>
+
+<p>A process to identify weaknesses in systems using automated tools to prevent attacks.</p>
+
+<h3>2. Difference between vulnerability scanning and penetration testing?</h3>
+
+<ul>
+<li><strong>Vulnerability Scanning:</strong> Automated, finds known issues.  </li>
+<li><strong>Penetration Testing:</strong> Manual, simulates real attacks for deeper insights.</li>
+</ul>
+
+<h3>3. Common vulnerabilities in personal computers?</h3>
+
+<ul>
+<li>Outdated software, weak passwords, malware, misconfigured firewalls, phishing, insecure Wi-Fi, lack of antivirus.</li>
+</ul>
+
+<h3>4. How do scanners detect vulnerabilities?</h3>
+
+<p>Using signature databases, behavioral analysis, policy checks, port scans, and credentialed access.</p>
+
+<h3>5. What is CVSS?</h3>
+
+<p>A scoring system for assessing vulnerability severity, helping prioritize risks.</p>
+
+<h3>6. How often should scans be done?</h3>
+
+<p>Based on criticality, compliance, and change frequency. Generally monthly or after changes.</p>
+
+<h3>7. What is a false positive?</h3>
+
+<p>When a scanner wrongly flags a vulnerability. It requires manual verification.</p>
+
+<h3>8. How do you prioritize vulnerabilities?</h3>
+
+<p>Based on CVSS score, exploitability, impact, asset importance, and threat intelligence.</p>
+
+<h2>Conclusion</h2>
+
+<p>This assessment provided a basic understanding of how to identify and prioritize vulnerabilities using tools like Nmap and the CVSS framework. Understanding vulnerabilities and how to assess them is key to maintaining system security.</p>
+
+<h2>References</h2>
+
+<p>[1] https://purplesec.us/learn/common-network-vulnerabilities/<br />
+[2] https://owasp.org/www-community/attacks/SQL_Injection<br />
+[3] https://owasp.org/www-community/attacks/xss/<br />
+[4] https://www.cisa.gov/topics/bad-actors-and-threats/phishing<br />
+[5] https://www.cisa.gov/topics/bad-actors-and-threats/ransomware<br />
+[6] https://www.first.org/cvss/</p>

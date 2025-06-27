@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Firewall Configuration Report - Task 4</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 40px;
+      color: #333;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+      padding: 4px;
+      background: #fff;
+      margin-top: 10px;
+      display: block; /* Ensures images are on their own line */
+      margin-bottom: 15px; /* Adds space below images */
+    }
+    code {
+      background-color: #f1f1f1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.95em;
+    }
+    .command {
+      background-color: #272822;
+      color: #f8f8f2;
+      padding: 10px;
+      border-radius: 6px;
+      font-family: monospace;
+      overflow-x: auto;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Firewall Configuration Report</h1>
+  <p><strong>Task:</strong> Task 4 – Setup and Use a Firewall on Windows</p>
+  <p><strong>Internship:</strong> Cyber Security Internship</p>
+  <p><strong>Objective:</strong> Configure and test basic firewall rules to allow or block traffic.</p>
+
+  <div class="section">
+    <h2>1. Opening Windows Defender Firewall</h2>
+    <p>To begin, I opened the Windows Defender Firewall with Advanced Security by typing <code>wf.msc</code> in the Run dialog box.</p>
+    <img src="01.png" alt="Run dialog with wf.msc" title="Run dialog with wf.msc">
+    <p>Upon opening, the console displays the current inbound rules configured on the system.</p>
+    <img src="02.png" alt="Initial list of Inbound Rules in Windows Defender Firewall" title="Initial list of Inbound Rules">
+  </div>
+
+  <div class="section">
+    <h2>2. Firewall Rule Creation</h2>
+    <p>I created a new inbound firewall rule named <strong>“Firewall Task”</strong> using the Windows Defender Firewall GUI. The rule was configured to block <strong>TCP traffic on port 1023</strong> for all network profiles (Domain, Private, and Public).</p>
+
+    <h3>New Inbound Rule Wizard Steps:</h3>
+    <p><strong>Step 1: Rule Type</strong> - Selected 'Port' to control connections for a specific TCP or UDP port.</p>
+    <img src="03.png" alt="New Inbound Rule Wizard - Rule Type" title="Rule Type: Port">
+
+    <p><strong>Step 2: Protocol and Ports</strong> - Configured the rule to apply to TCP traffic on specific local port 1023.</p>
+    <img src="04.png" alt="New Inbound Rule Wizard - Protocol and Ports" title="Protocol and Ports: TCP, Port 1023">
+
+    <p><strong>Step 3: Action</strong> - Chosen action was to 'Block the connection' for any traffic matching the rule.</p>
+    <img src="05.png" alt="New Inbound Rule Wizard - Action" title="Action: Block the connection">
+
+    <p><strong>Step 4: Profile</strong> - Applied the rule to all network profiles: Domain, Private, and Public.</p>
+    <img src="06.png" alt="New Inbound Rule Wizard - Profile" title="Profile: Domain, Private, Public">
+
+    <p><strong>Step 5: Name</strong> - Named the new rule "Firewall Task" for easy identification.</p>
+    <img src="07.png" alt="New Inbound Rule Wizard - Name" title="Name: Firewall Task">
+
+    <p>After completing the wizard, the new "Firewall Task" rule was visible and enabled in the Inbound Rules list.</p>
+    <img src="08.png" alt="Firewall Rule 'Firewall Task' Applied and Enabled" title="Firewall Task Rule in list">
+  </div>
+
+  <div class="section">
+    <h2>3. Testing the Rule</h2>
+    <p>I used PowerShell's <code>Test-NetConnection</code> cmdlet to verify if port 1023 was successfully blocked by the new rule.</p>
+    <div class="command">
+      Test-NetConnection -ComputerName localhost -Port 1023
+    </div>
+    <img src="09.png" alt="PowerShell command to test network connection" title="PowerShell Test Command">
+    <p><strong>Result:</strong> The connection attempt failed, indicated by <code>TcpTestSucceeded : False</code>, confirming that the firewall rule was working correctly and blocking traffic on port 1023.</p>
+    <img src="10.png" alt="PowerShell Test Result showing connection failed" title="PowerShell Test Result: Failed">
+  </div>
+
+  <div class="section">
+    <h2>4. Removing the Firewall Rule</h2>
+    <p>To restore the system to its original state, I removed the "Firewall Task" rule using PowerShell.</p>
+    <div class="command">
+      Remove-NetFirewallRule -DisplayName "Firewall Task"
+    </div>
+    <img src="11.png" alt="PowerShell command to remove firewall rule" title="PowerShell Remove Command">
+    <p><strong>Result:</strong> The rule was successfully removed from the firewall configuration.</p>
+    <img src="12.png" alt="Confirmation of firewall rule removal" title="Rule Removed Confirmation">
+  </div>
+
+  <div class="section">
+    <h2>5. Summary</h2>
+    <ul>
+      <li>Successfully configured a Windows Firewall rule to block TCP traffic on port 1023.</li>
+      <li>Verified the block using PowerShell's <code>Test-NetConnection</code> cmdlet.</li>
+      <li>Removed the rule to return the system to its default behavior.</li>
+    </ul>
+    <p>This task demonstrated practical knowledge of Windows Firewall, including rule creation, testing, and management, along with an understanding of network traffic filtering principles.</p>
+  </div>
+
+</body>
+</html>
