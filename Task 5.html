@@ -1,0 +1,177 @@
+<h1 id="network-traffic-analysis-report">Network Traffic Analysis
+Report</h1>
+<h2 id="introduction">Introduction</h2>
+<p>This report provides an analysis of the network traffic captured in
+the <code>Taskk5.pcap</code> file. The analysis aims to identify the
+types of protocols present, common network conversations, and potential
+security-related anomalies.</p>
+<h2 id="protocol-hierarchy">Protocol Hierarchy</h2>
+<p>The following is a summary of the protocol distribution observed in
+the PCAP file:</p>
+<pre><code>eth                                      frames:1672 bytes:174101
+  ip                                     frames:1499 bytes:156483
+    udp                                  frames:114 bytes:21237
+      mdns                               frames:102 bytes:19089
+      ssdp                               frames:12 bytes:2148
+    icmp                                 frames:1372 bytes:134456
+    igmp                                 frames:7 bytes:378
+    tcp                                  frames:6 bytes:412
+  ipv6                                   frames:91 bytes:14174
+    udp                                  frames:76 bytes:12852
+      mdns                               frames:76 bytes:12852
+    icmpv6                               frames:15 bytes:1322
+  arp                                    frames:82 bytes:3444</code></pre>
+<p>From the protocol hierarchy, it is evident that ICMP traffic
+constitutes a significant portion of the IPv4 traffic, likely indicating
+ping activities. MDNS and SSDP are also present, which are common for
+service discovery on local networks. TCP traffic is minimal, suggesting
+limited application-layer communication over TCP during the capture
+period.</p>
+<h2 id="top-talkers-ip-conversations">Top Talkers (IP
+Conversations)</h2>
+<p>The following table summarizes the top IP conversations observed in
+the PCAP file:</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Source IP</th>
+<th>Destination IP</th>
+<th>Frames (Src -&gt; Dst)</th>
+<th>Bytes (Src -&gt; Dst)</th>
+<th>Frames (Dst -&gt; Src)</th>
+<th>Bytes (Dst -&gt; Src)</th>
+<th>Total Frames</th>
+<th>Total Bytes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>172.20.190.6</td>
+<td>8.8.8.8</td>
+<td>679</td>
+<td>66 KB</td>
+<td>693</td>
+<td>67 KB</td>
+<td>1372</td>
+<td>134 KB</td>
+</tr>
+<tr class="even">
+<td>172.20.176.1</td>
+<td>224.0.0.251</td>
+<td>0</td>
+<td>0 bytes</td>
+<td>102</td>
+<td>19 KB</td>
+<td>102</td>
+<td>19 KB</td>
+</tr>
+<tr class="odd">
+<td>172.20.176.1</td>
+<td>239.255.255.250</td>
+<td>0</td>
+<td>0 bytes</td>
+<td>12</td>
+<td>2148 bytes</td>
+<td>12</td>
+<td>2148 bytes</td>
+</tr>
+<tr class="even">
+<td>172.20.176.1</td>
+<td>224.0.0.22</td>
+<td>0</td>
+<td>0 bytes</td>
+<td>7</td>
+<td>378 bytes</td>
+<td>7</td>
+<td>378 bytes</td>
+</tr>
+<tr class="odd">
+<td>172.20.190.6</td>
+<td>184.84.232.243</td>
+<td>2</td>
+<td>140 bytes</td>
+<td>4</td>
+<td>272 bytes</td>
+<td>6</td>
+<td>412 bytes</td>
+</tr>
+</tbody>
+</table>
+<p>The conversation between <code>172.20.190.6</code> and
+<code>8.8.8.8</code> (Google DNS) is the most prominent, accounting for
+a large number of ICMP packets, consistent with the protocol hierarchy
+analysis. This indicates frequent communication with a public DNS
+server, possibly for connectivity checks or DNS resolution. The other
+conversations involve multicast addresses, typical for local network
+discovery protocols.</p>
+<h2 id="tcp-conversation-analysis">TCP Conversation Analysis</h2>
+<p>Only a few TCP conversations were identified in the capture. The
+following are the details of the observed TCP packets, including
+source/destination IPs and ports, and TCP flags (SYN, ACK, FIN,
+RST):</p>
+<pre><code>172.20.190.6    39766   184.84.232.243  80  1   0   0   0
+184.84.232.243  80  172.20.190.6    39766   1   1   0   0
+172.20.190.6    39766   184.84.232.243  80  0   1   0   0
+172.20.190.6    39766   184.84.232.243  80  0   1   1   0
+184.84.232.243  80  172.20.190.6    39766   0   1   1   0
+172.20.190.6    39766   184.84.232.243  80  0   1   0   0</code></pre>
+<p>The TCP conversation primarily involves <code>172.20.190.6</code>
+communicating with <code>184.84.232.243</code> on port 80, which is
+typically used for HTTP. The flag sequence (SYN, SYN-ACK, ACK, FIN,
+FIN-ACK) indicates a normal TCP handshake and connection termination.
+There are no immediate signs of suspicious TCP activity such as
+excessive RST packets or unusual flag combinations that might suggest
+port scanning or denial-of-service attempts. However, further
+investigation into the content of these HTTP communications would be
+necessary for a complete security assessment.</p>
+<h2 id="security-findings-and-observations">Security Findings and
+Observations</h2>
+<p>Based on the analyzed traffic, the following security-related
+observations can be made:</p>
+<ul>
+<li><strong>High ICMP Traffic:</strong> The prevalence of ICMP traffic,
+particularly to <code>8.8.8.8</code>, is not inherently malicious but
+could be indicative of network monitoring, connectivity issues, or even
+a basic form of reconnaissance if originating from an unexpected source.
+In this case, it appears to be normal network behavior.</li>
+<li><strong>MDNS and SSDP Traffic:</strong> The presence of MDNS
+(Multicast DNS) and SSDP (Simple Service Discovery Protocol) traffic is
+common in local networks for device and service discovery. While
+generally benign, these protocols can sometimes be exploited for
+amplification attacks or information gathering in vulnerable
+configurations. No immediate vulnerabilities were identified in this
+capture.</li>
+<li><strong>Limited TCP Activity:</strong> The minimal TCP traffic
+suggests that the captured period did not involve extensive web
+browsing, file transfers, or other TCP-heavy applications. The observed
+TCP connection to port 80 appears to be a standard HTTP session. Without
+deeper packet inspection, it’s difficult to ascertain the nature of the
+HTTP communication, but the flag sequence is normal.</li>
+<li><strong>Absence of Alarming Signatures:</strong> There were no
+obvious signs of common network attacks such as widespread port scanning
+(many SYN packets without corresponding ACKs), brute-force attempts, or
+known malware communication patterns based on the high-level analysis of
+protocols and conversations. However, this does not rule out more
+sophisticated or encrypted threats.</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>The network traffic in <code>Taskk5.pcap</code> primarily consists of
+ICMP, MDNS, and SSDP protocols, indicating regular network operations,
+including connectivity checks and local service discovery. TCP activity
+is limited but shows a normal HTTP session. While no immediate security
+threats or anomalies were identified through this high-level analysis, a
+more in-depth inspection of application-layer data (if available and
+unencrypted) would be necessary for a comprehensive security assessment.
+This report provides a foundational understanding of the network
+behavior captured in the provided PCAP file.</p>
+<p><strong>Author:</strong> Manus AI</p>
